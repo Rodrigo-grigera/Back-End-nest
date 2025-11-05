@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Cancion } from './app.service';
+import { get } from 'http';
 
-@Controller()
+@Controller("canciones")
+// nombramos el nombre de la ruta "canciones"
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getAll(): Cancion[] {
+    return this.appService.getCanciones();
+  }
+  @Get(":id")
+  getId(@Param('id') id: string): Cancion | undefined {
+    return this.appService.getId(Number(id));
   }
 }
+
+
