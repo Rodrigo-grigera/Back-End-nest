@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Delete, Put  } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Delete, Put, Patch  } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { type Track } from '../track/track.interface';
 
@@ -14,11 +14,11 @@ export class TrackController {
         return  this.trackService.getTracks();
       }
       @Get(":id")
-        getById(@Param('id') id: string): Promise <Track | undefined> {
+        getById(@Param('id') id: string): Promise <Track|undefined> {
         return this.trackService.getTrackId(id);
       }
       @Post()
-        create(@Body() track: Track){
+        create(@Body() track: Track): Promise<void>{
           return this.trackService.createTrack(track)
         }
       @Delete(":id")
@@ -29,6 +29,11 @@ export class TrackController {
       @Put()
         update(@Param(":id") id:string, @Body() body: Track): Promise<any>{
           return  this.trackService.update(id,body)
+        }
+
+      @Patch()
+        updatePatch(@Param(":id") id:string, @Body()body: Track ): Promise<any>{
+          return this.trackService.updatePatch(id,body);
         }
       
 }

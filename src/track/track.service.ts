@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Track } from '../track/track.interface';
+import { resolveSoa } from 'dns';
+import { matchesGlob } from 'path';
 
 
 const BASE_URL = "http://localhost:3001/tracks"
@@ -13,7 +15,7 @@ async getTracks(): Promise <Track[]> {
     return allTracks; 
   }
   
-  async getTrackId(id): Promise <Track| undefined> {
+  async getTrackId(id): Promise <Track |undefined> {
     const res = await fetch(`${BASE_URL}/${id}`);
     if(!res.ok){
       console.log("Error de solicitud");
@@ -23,38 +25,64 @@ async getTracks(): Promise <Track[]> {
     }
     }
 
-  async createTrack(track:Track){
+  async createTrack(track:Track): Promise <any>{
        const res = await fetch(BASE_URL, {
         method: "POST",
         headers:{  
-          "Content-type": "application-json"
+          "Content-Type": "application/json"
           }, 
           body: JSON.stringify(track)
        });
-       return `Se Agrego track: "${track.nombre}" a la lista`
+       console.log(`Se Agrego track: "${track.nombre}" a la lista`)
     }
 
     async delete(id:string): Promise<void>{
        const res = await fetch(`${BASE_URL}/${id}`, {
         method: "DELETE",
- 
        });
-      const endRespon = res.json()
+      const endRespon = await res.json()
       return endRespon
     }
 
-    async update(id: string, body: Track): Promise<any>{
+    async update(id: string, body: Track): Promise<void>{
+
       const isTrack = await this.getTrackId(id);
+      if(!isTrack){
+        throw new Error("Track no encontrado");
+      }
       const update = {...body,id}
+
       const res = await fetch(`${BASE_URL}/${id}`, {
         method: "PUT",
         headers:{  
-          "Content-type": "application-json"
+          "Content-Type": "application/json"
           }, 
           body: JSON.stringify(update)
        });
-      const endRespon = res.json()
+      const endRespon = await res.json()
       return endRespon
     }
+    /*con patch es lo mismo que put pero no es necesario parsar todo el objeto,
+    solo modificas las propiedades que se quiere, en el codigo solo cambiamos el metodo que
+    pasamos en el fetch de la url "method: "PATCH" */
+
+    async updatePatch(id:string, body:Track): Promise<void>{
+      const isTrack = await this.getTrackId(id);
+      if(!isTrack){
+         throw new Error("Track no encontrado");
+      }
+        const update = {...body,id}
+
+       const res = await fetch(`${BASE_URL}/${id}`, {
+        method: "PATCH",
+        headers:{  
+          "Content-Type": "application/json"
+          }, 
+          body: JSON.stringify(update)
+       });
+        const endRespon = await res.json()
+        return endRespon
+    }
   }
+
 

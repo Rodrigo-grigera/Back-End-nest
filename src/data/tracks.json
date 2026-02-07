@@ -1,24 +1,6 @@
 {
   "tracks": [
     {
-      "id": "1",
-      "nombre": "Bohemian Rhapsody",
-      "artista": "Queen",
-      "duracion": "5:55",
-      "album": "A Night at the Opera",
-      "genero": "Rock",
-      "año": 1975
-    },
-    {
-      "id": "3",
-      "nombre": "Smells Like Teen Spirit",
-      "artista": "Nirvana",
-      "duracion": "5:01",
-      "album": "Nevermind",
-      "genero": "Grunge",
-      "año": 1991
-    },
-    {
       "id": "4",
       "nombre": "Billie Jean",
       "artista": "Michael Jackson",
@@ -28,24 +10,6 @@
       "año": 1982
     },
     {
-      "id": "5",
-      "nombre": "Hips Don't Lie",
-      "artista": "Shakira ft. Wyclef Jean",
-      "duracion": "3:38",
-      "album": "Oral Fixation, Vol. 2",
-      "genero": "Latin Pop",
-      "año": 2006
-    },
-    {
-      "id": "6",
-      "nombre": "Hotel California",
-      "artista": "Eagles",
-      "duracion": "6:30",
-      "album": "Hotel California",
-      "genero": "Rock",
-      "año": 1976
-    },
-    {
       "id": "7",
       "nombre": "Blinding Lights",
       "artista": "The Weeknd",
@@ -53,42 +17,6 @@
       "album": "After Hours",
       "genero": "Synthpop",
       "año": 2019
-    },
-    {
-      "id": "8",
-      "nombre": "Rolling in the Deep",
-      "artista": "Adele",
-      "duracion": "3:48",
-      "album": "21",
-      "genero": "Soul / Pop",
-      "año": 2010
-    },
-    {
-      "id": "9",
-      "nombre": "Enter Sandman",
-      "artista": "Metallica",
-      "duracion": "5:31",
-      "album": "Metallica (The Black Album)",
-      "genero": "Heavy Metal",
-      "año": 1991
-    },
-    {
-      "id": "10",
-      "nombre": "Levitating",
-      "artista": "Dua Lipa",
-      "duracion": "3:23",
-      "album": "Future Nostalgia",
-      "genero": "Disco Pop",
-      "año": 2020
-    },
-    {
-      "id": "a207",
-      "nombre": "Still loving you",
-      "artista": "Scorpion",
-      "duracion": "3:53",
-      "album": "÷ (Divide)",
-      "genero": "Rock",
-      "año": 1995
     },
     {
       "id": "a921",
@@ -134,6 +62,51 @@
       "genero": "Rock",
       "año": 2005,
       "id": "d007"
+    },
+    {
+      "id": "9eb8",
+      "nombre": "Mi condena",
+      "artista": "La liga",
+      "duracion": "3:01",
+      "album": "El tronco",
+      "genero": "Cumbia",
+      "año": 2005
+    },
+    {
+      "id": "fb9a",
+      "nombre": "One like you",
+      "artista": "Scorpion",
+      "duracion": "3:53",
+      "album": "÷ (Divide)",
+      "genero": "Rock",
+      "año": 1995
+    },
+    {
+      "id": "fbc9",
+      "nombre": "One like you",
+      "artista": "Scorpion",
+      "duracion": "3:53",
+      "album": "÷ (Divide)",
+      "genero": "Rock",
+      "año": 1995
+    },
+    {
+      "id": "c561",
+      "nombre": "Circulo de Fuego",
+      "artista": "Rata blanca",
+      "duracion": "3:53",
+      "album": "Talisman",
+      "genero": "Rock",
+      "año": 1995
+    },
+    {
+      "id": "050c",
+      "nombre": "Voices in my Head",
+      "artista": "Falling in Reverse",
+      "duracion": "4:20",
+      "album": "After Hours",
+      "genero": "Synthpop",
+      "año": 2019
     }
   ]
 }
