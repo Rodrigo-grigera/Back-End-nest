@@ -1,18 +1,31 @@
-import { IsString, IsNumber } from "class-validator";
+import { IsString, IsNumber, MaxLength, ArrayMinSize, IsArray, IsUUID, IsOptional, Min } from "class-validator";
 
 export class TrackDTO{
     @IsString()
+    @MaxLength(255)
     nombre: string
-    @IsString()
-    artista: string
-    @IsString()
-    duracion: string
-    @IsString()
-    album: string
-    @IsString()
-    genero: string
+ 
     @IsNumber()
-    año: 1982   
+    @Min(1)
+    duracion: number
+
+    @IsString()
+    @MaxLength(50)
+    genero: string
+    
+    @IsNumber()
+    year: number 
+    
+    @IsArray()
+    @IsUUID('all' , { each: true })
+    @ArrayMinSize(1,{message: 'Tiene que haber al menos 1 TRACKS'})
+    artistaIds: string []
+
+    @IsArray()
+    @IsOptional()
+    albumnIds? : String[]
+
+
 }
 
 /* instalamos class validator y class transformer para poder agregar los decoradores

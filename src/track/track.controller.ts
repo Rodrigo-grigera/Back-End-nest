@@ -14,20 +14,23 @@ export class TrackController {
         return  this.trackService.getTracks();
       }
       @Get(":id")
-      // @HttpCode(204)
-      //una mejor practica es con enum.@HttpCode(HttpStatus.NO_CONTENT)
-      async getById(@Res() res:Response ,@Param('id') id: string): Promise <any> {
-          const response : responseDTO = await this.trackService.getTrackId(id) ;
-          res.status(response.code).json(response.data)
+      getById(@Param("id") id: string): Promise <TrackDTO|responseDTO>{
+        return this.trackService.getTrackId(id);
       }
+      // @HttpCode(204)
+      //otra manera es con enum.@HttpCode(HttpStatus.NO_CONTENT)
+      // async getById(@Res() res:Response ,@Param('id') id: string): Promise <any> {
+      //     const response : responseDTO = await this.trackService.getTrackId(id) ; //de esta manera controlamos la respuesta de forma dinamica con decorador @res
+      //     res.status(response.code).json(response.data)
+      // }
       @Post()
       //  @HttpCode(201)
-        create(@Body() track: TrackDTO): Promise<void>{
+       create(@Body() track: TrackDTO): Promise<responseDTO>{
           return this.trackService.createTrack(track)
         }
       @Delete(":id")
-       @HttpCode(200)
-        delete(@Param("id") id:string): Promise<void>{
+      //  @HttpCode(200)
+        delete(@Param("id") id:number): Promise<responseDTO>{
           return this.trackService.delete(id)
         }
       
@@ -37,7 +40,7 @@ export class TrackController {
         }
 
       @Patch()
-        updatePatch(@Param(":id") id:string, @Body()body: TrackDTO): Promise<any>{
+        updatePatch(@Param(":id") id:string, @Body()body: Partial<TrackDTO>): Promise<responseDTO>{
           return this.trackService.updatePatch(id,body);
         }
       
