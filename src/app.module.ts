@@ -11,6 +11,9 @@ import { ArtistModule } from './artist/artist.module';
 import { AlbumnModule } from './albumn/albumn.module';
 import { Albumn } from './albumn/entities/albumn.entity';
 import { Artist } from './artist/entities/artist.entity';
+import { UserModule } from './user/user.module';
+import { UserEntity } from './user/entities/user.entity';
+
 
 
 
@@ -26,9 +29,9 @@ import { Artist } from './artist/entities/artist.entity';
       database: process.env.DB_NAME,
       synchronize: true,
       // entities:[__dirname + '/**/*.entity{.ts,.js}'] //de esta forma decimos que lea todos los archivos .entiti (en caso de crear mas entidades para la tabla)
-      entities:[trackEntity,Albumn,Artist]
+      entities:[trackEntity,Albumn,Artist,UserEntity]
     }) 
-    ,TrackModule, ArtistModule, AlbumnModule] /*importamos trackModule q posee trackController y trackService.
+    ,TrackModule, ArtistModule, AlbumnModule, UserModule] /*importamos trackModule q posee trackController y trackService.
   por lo tanto no hay que pasar en el controller y provaiders y podemos eliminar los archivos app.controler y
   app.service que vienen en la raiz del proyecto .   */
 
