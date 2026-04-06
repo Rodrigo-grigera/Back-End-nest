@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { responseDTO } from 'src/dto/responseDTO';
+import { responseDTO } from '../dto/responseDTO';
 import { UserEntity } from './entities/user.entity';
 
 // intalamos bcrypt npm i @bcrypt
@@ -19,8 +19,10 @@ export class UserService {
 // esta password es pas1234 encriptada nos da ese codigo. (de manera hardcodeado, no estamos usando base de datos)
 
   async login(loginUser: LoginUserDto): Promise <any> {
-    const emailUsuario = loginUser.email;
-    const passwUsuario = loginUser.password;
+    try {
+      
+      const emailUsuario = loginUser.email;
+      const passwUsuario = loginUser.password;
 
     const usuario = await this.userRepository.findOneBy({email: emailUsuario});
     if(usuario == null || usuario == undefined){
@@ -32,7 +34,10 @@ export class UserService {
         message: 'Login aceptado'
       };
     }
+  } catch (error) {
+    
     throw new NotFoundException('Usuario invalido');
+  }
   }
 
   async create(createUser : CreateUserDto) : Promise <responseDTO>{

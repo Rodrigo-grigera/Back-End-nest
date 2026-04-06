@@ -17,10 +17,10 @@ export class Albumn {
     @Column({type: "text", nullable: true})
     descripcion: string
 
-    @OneToMany(() => trackEntity, track => track.albumn)
+    @OneToMany(() => trackEntity, track => track.album)
     tracks : trackEntity []
 
-    @ManyToMany(() => Artist, artist => artist.albumns,{
+    @ManyToMany(() => Artist, artist => artist.album,{
         eager: true //carga automaticamente el artista o los artistas con el albumn 
     })
 // cuando usamos eager hay que crear una tabla puente , por eso joinTable

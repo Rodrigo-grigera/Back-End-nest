@@ -1,16 +1,23 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { responseDTO } from 'src/dto/responseDTO';
-import { TrackDTO } from 'src/dto/trackDTO';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { BadRequestException, ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { responseDTO } from '.././dto/responseDTO';
+import { TrackDTO } from '.././dto/trackDTO';
+import { InjectRepository} from '@nestjs/typeorm';
+import { Repository, In } from 'typeorm';
 import { trackEntity } from './track.entity';
+import { Artist } from '.././artist/entities/artist.entity';
+import { Albumn } from '.././albumn/entities/albumn.entity';
+
+
 
 const BASE_URL = "http://localhost:3001/tracks"
 
 @Injectable()
 export class TrackService {
 
-  constructor(@InjectRepository(trackEntity)private readonly trackRepository : Repository <trackEntity>){}
+  constructor(@InjectRepository(trackEntity)private readonly trackRepository : Repository <trackEntity>,
+              @InjectRepository(Artist)private readonly artisRepository : Repository <Artist>,
+              @InjectRepository(Albumn) private readonly albumRepository : Repository <Albumn>
+            ){} 
 // con este constructor hacemos que nuestros metodos puedan interactuar con nuestra base de datos y no con un json que simule la base de datos 
 // typeorm nos provee un tipado (repository) al que le pasamos nuestra entidad y asi interactua 
 
@@ -61,17 +68,68 @@ async getTracks(): Promise <TrackDTO | responseDTO>{
 
     /*Forma de hacerlo con nuestar base de datos mysql */
     
-     async createTrack(track: TrackDTO): Promise <responseDTO> {
-      const newTrack = this.trackRepository.create(track)
-      const res = await this.trackRepository.save(newTrack)
-      return{
-          message: "track creado",
-          code: HttpStatus.CREATED,
-          data: res
+     async createTrack(body: TrackDTO): Promise <trackEntity> {
+      try {
+        
+        //PARA CREAR UN TRACK tiene que tener un artista, debemos validar si hay un artista
+      if(!body.artistaIds || body.artistaIds.length === 0){
+        throw new BadRequestException('Debe proporcionar al menos 1 artista')
+      }
+      
+      //validar si existe el artista
+      const artists = await this.artisRepository.find({
+          where:{artist_id: In(body.artistaIds)}
+          //In es operador de sql que nos permite ver si un valor esta dentro de una lista de valores
+        })
+        if(!artists.length){
+          throw new NotFoundException('No se encontro artista')
         }
 
-    }
+        //buscar y validar si el album (si lo pasaron) existe . Este parametro es opcionar en trackEntity
+        let album : Albumn | null = null
+        if(body.albumnIds){
+         album = await this.albumRepository.findOne({
+          where: {albumn_id : In(body.albumnIds)}
+         })
+        }
+        if(!album){
+          throw new NotFoundException('Albun not found')
+        }
+        
+        // validar si el album existe y si existe que no se repita ese numero de track
+        
+        if(body.trackNUM && body.albumnIds){
+          const exiteTrack = await this.trackRepository.findOne({
+            where:{
+              album :{albumn_id : In(body.albumnIds)},
+              trackNUM : body.trackNUM
+            }
+          })
 
+          if(exiteTrack){
+            throw new ConflictException('Numero de track ya existe en el albumn') 
+          }
+        }
+      //crear el track
+        const {artistaIds, albumnIds, ...trackData} = body;
+        const trackOne = this.trackRepository.create({
+          artists, album, ...trackData
+        })
+
+        //Guardar el resultado
+        const saveTrack = await this.trackRepository.save(trackOne)
+        const foundTrack = await this.trackRepository.findOne({
+          where : {track_id: saveTrack.track_id},
+          relations : ['artists', 'albumn']
+        })
+        if(!foundTrack) throw new NotFoundException('Track not found')
+
+        return foundTrack;
+
+  } catch (error) {
+    throw new InternalServerErrorException('Fallo la creacion de track')
+  }
+}
     async delete(id: number): Promise <responseDTO> {
       const resp = await this.trackRepository.delete(id);
       if(!resp.affected) throw new NotFoundException(`No se encontro track ${id}`);
