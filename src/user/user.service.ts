@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { responseDTO } from 'src/dto/responseDTO';
+import { responseDTO } from '../dto/responseDTO';
 import { UserEntity } from './entities/user.entity';
 
 // intalamos bcrypt npm i @bcrypt

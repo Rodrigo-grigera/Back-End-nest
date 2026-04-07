@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { responseDTO } from 'src/dto/responseDTO';
-import { TrackDTO } from 'src/dto/trackDTO';
+import { responseDTO } from '../dto/responseDTO';
+import { TrackDTO } from '../dto/trackDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { trackEntity } from './track.entity';

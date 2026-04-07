@@ -1,5 +1,5 @@
-import { Albumn } from "src/albumn/entities/albumn.entity";
-import { trackEntity } from "src/track/track.entity";
+import { Albumn } from "../../albumn/entities/albumn.entity";
+import { trackEntity } from "../../track/track.entity";
 import { Column,  CreateDateColumn,  Entity,  ManyToMany,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('artist')

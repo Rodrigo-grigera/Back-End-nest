@@ -1,6 +1,4 @@
 import { ArrayMinSize, IsArray, IsDate, isDate, IsNumber, IsString, IsUUID } from "class-validator";
-import { Artist } from "src/artist/entities/artist.entity";
-import { trackEntity } from "src/track/track.entity";
 
 export class CreateAlbumnDto {
     @IsString()

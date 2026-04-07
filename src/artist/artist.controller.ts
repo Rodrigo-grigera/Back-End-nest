@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ArtistService } from './artist.service';
 import { ArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-import { responseDTO } from 'src/dto/responseDTO';
+import { responseDTO } from '../dto/responseDTO';
 
 @Controller('artist')
 export class ArtistController {

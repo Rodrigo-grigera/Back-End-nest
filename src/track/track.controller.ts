@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Param, Body, Delete, Put, Patch, HttpCode, HttpStatus, Res, ParseIntPipe, ParseUUIDPipe  } from '@nestjs/common';
 import { TrackService } from './track.service';
-import { responseDTO } from 'src/dto/responseDTO';
-import {type Response } from 'express';
-import { TrackDTO } from 'src/dto/trackDTO';
+import { responseDTO } from '..//dto/responseDTO';
+import { TrackDTO } from '../dto/trackDTO';
 
 @Controller("tracks")
 export class TrackController {

@@ -1,5 +1,5 @@
-import { Artist } from "src/artist/entities/artist.entity";
-import { trackEntity } from "src/track/track.entity";
+import { Artist } from "../../artist/entities/artist.entity";
+import { trackEntity } from "../../track/track.entity";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 

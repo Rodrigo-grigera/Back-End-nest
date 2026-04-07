@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumnDto } from './dto/create-albumn.dto';
 import { UpdateAlbumnDto } from './dto/update-albumn.dto';
-import { responseDTO } from 'src/dto/responseDTO';
+import { responseDTO } from '../dto/responseDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Albumn } from './entities/albumn.entity';
 import { Repository } from 'typeorm';
