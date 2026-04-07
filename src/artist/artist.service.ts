@@ -1,24 +1,29 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './entities/artist.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { responseDTO } from '../dto/responseDTO';
-
 @Injectable()
 export class ArtistService {
   constructor(@InjectRepository(Artist)private readonly artistRepository : Repository <Artist>){}
 
-  async create(createArtist: ArtistDto): Promise <responseDTO> {
-    const createOneArtist = this.artistRepository.create(createArtist);
-    const newArtist = await this.artistRepository.save(createOneArtist);
-    return {
-            message: `Nuevo Artista creado`,
-            code: HttpStatus.CREATED ,
-            data : newArtist
+  //otra forma de manejar errores y devolver directamente la entidad y NO un responseDTO 
+  async create(createArtist: ArtistDto): Promise <Artist> {
+    try {
+      
+      const createOneArtist = this.artistRepository.create(createArtist);
+      const newArtist = await this.artistRepository.save(createOneArtist);
+      return newArtist;
 
-    };
+    } catch (error) {
+      if(error === 'ER_DUP_ENTRY' || error === 1062){ //de esta forma podemos manejar el error si el artista que se creo ya existe
+        throw new ConflictException(`Artist con nombre "${createArtist.nombre}" ya existe`)
+      }
+          throw new InternalServerErrorException('Fallo en la creacion de Artista');
+
+        }
   }
 
   async findAll() : Promise <responseDTO> {

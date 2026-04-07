@@ -19,7 +19,7 @@ export class trackEntity{
     @Column({type: "varchar", length: 50})    
     genero: string
 
-    @Column({type: "int"})    
+    @Column({type: "int", nullable : true})    
     year: number
 
     @ManyToOne(() => Albumn, albumn => albumn.tracks, {
@@ -27,7 +27,7 @@ export class trackEntity{
         onDelete : "SET NULL" //en esta ocacion nos permite que se elimine el albumn pero sin los tracks, q los tracks queden en la base de datos
     })
     @JoinColumn({name: "albumn_id"})
-    albumn : Albumn
+    album : Albumn
 
     @ManyToMany(() => Artist, artist => artist.tracks, {
         eager : true , //typeOrm tiene esta propiedad q nos permite cargar las relaciones sin q hagamos el join (ojo hace q la consulta sea mas pesada)
@@ -41,13 +41,14 @@ export class trackEntity{
         joinColumn: {name: 'track_id', referencedColumnName: 'track_id'},
         inverseJoinColumn:{name: 'artist_id', referencedColumnName: 'artist_id'}
     })
-  artist : Artist[]
+    artists : Artist[]
 
     @CreateDateColumn()
     createDATE: Date //a esta columna le va a poner la fecha y hora en la que se crea
 
-        @UpdateDateColumn() //hace lo mismo q create pero cuando el campo se actualiza tambien se actializa la hora
-        updaDTE: Date
+    @UpdateDateColumn() //hace lo mismo q create pero cuando el campo se actualiza tambien se actializa la hora
+    updaDTE: Date
+   
 }
 //creamos la entidad que es como la clase dto pero con diferentes decoradores.
 /*El typeorm nos permite crear entidades que representan las tablas de nuestra base de datos, */

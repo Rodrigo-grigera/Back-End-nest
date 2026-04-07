@@ -8,6 +8,9 @@ export class TrackDTO{
     @IsNumber()
     @Min(1)
     duracion: number
+    
+    @IsNumber()    
+    trackNUM?: number
 
     @IsString()
     @MaxLength(50)
@@ -23,7 +26,7 @@ export class TrackDTO{
 
     @IsArray()
     @IsOptional()
-    albumnIds? : String[]
+    albumnIds? : string[]
 
 
 }

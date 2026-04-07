@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, isArray, IsOptional, IsString, IsUrl, IsUUID, MaxLength } from "class-validator";
+import { ArrayMinSize, IsArray,  IsOptional, IsString, IsUrl, IsUUID, MaxLength } from "class-validator";
 
 export class ArtistDto {
     @IsString()

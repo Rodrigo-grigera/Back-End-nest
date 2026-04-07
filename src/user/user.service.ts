@@ -19,8 +19,10 @@ export class UserService {
 // esta password es pas1234 encriptada nos da ese codigo. (de manera hardcodeado, no estamos usando base de datos)
 
   async login(loginUser: LoginUserDto): Promise <any> {
-    const emailUsuario = loginUser.email;
-    const passwUsuario = loginUser.password;
+    try {
+      
+      const emailUsuario = loginUser.email;
+      const passwUsuario = loginUser.password;
 
     const usuario = await this.userRepository.findOneBy({email: emailUsuario});
     if(usuario == null || usuario == undefined){
@@ -32,7 +34,10 @@ export class UserService {
         message: 'Login aceptado'
       };
     }
+  } catch (error) {
+    
     throw new NotFoundException('Usuario invalido');
+  }
   }
 
   async create(createUser : CreateUserDto) : Promise <responseDTO>{

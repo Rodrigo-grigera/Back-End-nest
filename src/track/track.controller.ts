@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Param, Body, Delete, Put, Patch, HttpCode, HttpStatus, Res, ParseIntPipe, ParseUUIDPipe  } from '@nestjs/common';
 import { TrackService } from './track.service';
-import { responseDTO } from '..//dto/responseDTO';
+import { responseDTO } from '../dto/responseDTO';
 import { TrackDTO } from '../dto/trackDTO';
+import { trackEntity } from './track.entity';
 
 @Controller("tracks")
 export class TrackController {
@@ -24,7 +25,7 @@ export class TrackController {
       // }
       @Post()
       //  @HttpCode(201)
-       create(@Body() track: TrackDTO): Promise<responseDTO>{
+       create(@Body() track: TrackDTO): Promise<trackEntity>{
           return this.trackService.createTrack(track)
         }
       @Delete(":id")

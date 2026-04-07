@@ -23,7 +23,7 @@ export class Artist {
     @Column({type: "varchar", length: 50, nullable: true})
     genero: string
 
-   @ManyToMany(() => trackEntity, track => track.artist,{
+   @ManyToMany(() => trackEntity, track => track.artists,{
         onDelete : "RESTRICT" //evita eliminar artistas con tracks
    })
     tracks: trackEntity[]
@@ -31,7 +31,7 @@ export class Artist {
     @ManyToMany(() => Albumn, albumns => albumns.artist, {
         onDelete: "RESTRICT"
     })
-    albumns : Albumn[]
+    album : Albumn[]
 
     @CreateDateColumn()
     createDATE: Date
