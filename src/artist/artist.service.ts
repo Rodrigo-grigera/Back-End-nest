@@ -18,9 +18,7 @@ export class ArtistService {
       return newArtist;
 
     } catch (error) {
-      if(error === 'ER_DUP_ENTRY' || error === 1062){ //de esta forma podemos manejar el error si el artista que se creo ya existe
-        throw new ConflictException(`Artist con nombre "${createArtist.nombre}" ya existe`)
-      }
+      
           throw new InternalServerErrorException('Fallo en la creacion de Artista');
 
         }

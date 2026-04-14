@@ -2,7 +2,7 @@ import { Albumn } from "../../albumn/entities/albumn.entity";
 import { trackEntity } from "../../track/track.entity";
 import { Column,  CreateDateColumn,  Entity,  ManyToMany,  PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('artist')
+@Entity('artists')
 export class Artist {
 
     @PrimaryGeneratedColumn("uuid")

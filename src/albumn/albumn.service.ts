@@ -4,27 +4,35 @@ import { UpdateAlbumnDto } from './dto/update-albumn.dto';
 import { responseDTO } from '../dto/responseDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Albumn } from './entities/albumn.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { Artist } from '../artist/entities/artist.entity';
 
 @Injectable()
 export class AlbumnService {
 
-  constructor(@InjectRepository(Albumn) private readonly albumRepositori : Repository <Albumn>){}
+  constructor(@InjectRepository(Albumn) private readonly albumRepositori : Repository <Albumn>,
+              @InjectRepository(Artist) private readonly artistRepository : Repository <Artist>){}
 
 
-  async create(createAlbumnDto: CreateAlbumnDto): Promise <responseDTO> {
-    const createOne = this.albumRepositori.create(createAlbumnDto);
-    const resp = await this.albumRepositori.save(createOne);
-    if(!resp) throw new NotFoundException('Eror al crear el albumn')
-    return {
-            message: 'Albumn agregado con exito',
-            code: HttpStatus.CREATED,
-            data: resp
+  async create(body: CreateAlbumnDto): Promise <Albumn> {
+    try {
+      
+      const {artistIds, trackIds, ...albumData} = body;
+      const artist = await this.artistRepository.find({
+        where : {artist_id: In(artistIds)}
+      })
+      const createOne = this.albumRepositori.create({
+        ...albumData, artist : artist,
+      });
+      const resp = await this.albumRepositori.save(createOne);
+      return resp 
+    } catch (error) {
+      throw new NotFoundException('Eror al crear el albumn')
     }
   };
 
   async findAll() : Promise <responseDTO> {
-    const resp = await this.albumRepositori.find();
+    const resp = await this.albumRepositori.find()
     if(!resp.length) throw new NotFoundException('Albumn no encontrado')
     return {
             message: 'Todos los albumns',

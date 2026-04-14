@@ -3,7 +3,7 @@ import { AlbumnService } from './albumn.service';
 import { CreateAlbumnDto } from './dto/create-albumn.dto';
 import { UpdateAlbumnDto } from './dto/update-albumn.dto';
 
-@Controller('albumn')
+@Controller('albums')
 export class AlbumnController {
   constructor(private readonly albumnService: AlbumnService) {}
 

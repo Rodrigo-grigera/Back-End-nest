@@ -13,13 +13,14 @@ import { Albumn } from './albumn/entities/albumn.entity';
 import { Artist } from './artist/entities/artist.entity';
 import { UserModule } from './user/user.module';
 import { UserEntity } from './user/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), //Instalamos @nestjs/config para poder leer las variables de entorno (.env)
+    ConfigModule.forRoot({isGlobal: true}), //Instalamos @nestjs/config para poder leer las variables de entorno (.env)
     TypeOrmModule.forRoot({
       type: "mysql",
       host: process.env.DB_HOST,
@@ -31,7 +32,7 @@ import { UserEntity } from './user/entities/user.entity';
       // entities:[__dirname + '/**/*.entity{.ts,.js}'] //de esta forma decimos que lea todos los archivos .entiti (en caso de crear mas entidades para la tabla)
       entities:[trackEntity,Albumn,Artist,UserEntity]
     }) 
-    ,TrackModule, ArtistModule, AlbumnModule, UserModule] /*importamos trackModule q posee trackController y trackService.
+    ,TrackModule, ArtistModule, AlbumnModule, UserModule, AuthModule] /*importamos trackModule q posee trackController y trackService.
   por lo tanto no hay que pasar en el controller y provaiders y podemos eliminar los archivos app.controler y
   app.service que vienen en la raiz del proyecto .   */
 

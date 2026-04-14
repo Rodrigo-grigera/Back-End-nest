@@ -1,32 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+
 // import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('login')
-  @HttpCode(200)
-  login(@Body() user : LoginUserDto) {
-    return this.userService.login(user);
-  }
 
   @Post()
   create(@Body() user: CreateUserDto){
     return this.userService.create(user)
   }
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
+
+  @Get(':email')
+  findEmail(@Param('email') email: string) {
+    return this.userService.findUserEmail(email);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

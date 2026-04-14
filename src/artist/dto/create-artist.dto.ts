@@ -25,13 +25,15 @@ export class ArtistDto {
 
     @IsArray()
     @IsUUID('all' , { each: true })
-    @ArrayMinSize(1,{message: 'Tiene que haber al menos 1 TRACKS'})
-    trackIds: string[]
+    @IsOptional()
+    // @ArrayMinSize(1,{message: 'Tiene que haber al menos 1 TRACKS'})
+    trackIds?: string[]
 
     @IsArray()
     @IsUUID('all' , { each: true })
-    @ArrayMinSize(1,{message: 'Tiene que haber al menos 1 artista'})
-    albumnIds : String[]
+    @IsOptional()
+    // @ArrayMinSize(1,{message: 'Tiene que haber al menos 1 artista'})
+    albumnIds? : String[]
 
     
 }
